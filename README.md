@@ -39,6 +39,31 @@ A **API de Entregas de Encomendas** é um back-end completo para gerenciar usuá
 - [tsx](https://github.com/privatenumber/tsx) — execução e hot reload em TypeScript
 - [tsup](https://tsup.egoist.dev/) — build para produção
 
+## 🗄️ Esquema do Banco de Dados
+
+1. **User (Usuários):** Armazena dados de acesso e o papel (`role`) do usuário.
+2. **Delivery (Entregas):** Armazena a descrição, o usuário vinculado e o `status` atual da encomenda.
+3. **DeliveryLog (Logs de Entrega):** Armazena o histórico de eventos de uma entrega específica.
+
+## 📍 Rotas Disponíveis
+
+A API possui os seguintes endpoints configurados:
+
+### 👤 Usuários e Sessões
+- `POST /users` - Criação de um novo usuário.
+- `POST /sessions` - Autenticação de usuário e retorno do token JWT.
+
+### 📦 Entregas (`/deliveries`)
+*Nota: Todas as rotas de entregas requerem autenticação (JWT) e autorização de cargo `sale`.*
+- `POST /deliveries` - Criação de um novo pedido de entrega.
+- `GET /deliveries` - Listagem de todas as entregas.
+- `PATCH /deliveries/:id/status` - Atualização do status de uma entrega (`processing`, `shipped`, `delivered`).
+
+### 📝 Logs de Entregas (`/delivery-logs`)
+*Nota: Todas as rotas de logs requerem autenticação (JWT).*
+- `POST /delivery-logs` - Adição de um novo log de rastreamento para uma entrega. *(Restrito ao cargo `sale`)*
+- `GET /delivery-logs/:delivery_id/show` - Visualização do histórico de logs de uma entrega. *(Permitido para cargos `sale` e `customer`)*
+
 ## 📁 Estrutura do Projeto
 
 ```
